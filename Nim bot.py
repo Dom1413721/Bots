@@ -18,9 +18,10 @@
 
 #In a sense this bot always plays first, but if you would like to play first, choose your initial setup then, as your first input, enter the setup that the game is in after your first move 
 
-import secrets
+import random
 
 def nim_sum(x):
+    #calculates the "nim sum" of a position.
     x = [i for i in x if i != 0]
     ans = 0
     for i in x:
@@ -30,10 +31,12 @@ def nim_sum(x):
 
 
 def nim_move(x):
+    #if the nim sum of a position is 0 it is losing, so bot chooses a random pile to remove 1 from.
+    #otherwise it's winning, the winning move makes the nim sum of the resulting position equal to 0.
     x = [i for i in x if i != 0]
     s = nim_sum(x)
     if s == 0:
-        heap = secrets.randbelow(len(x))
+        heap = random.choice(range(len(x)))
         x[heap]-=1
     else:
         for i in range(len(x)):
@@ -44,16 +47,16 @@ def nim_move(x):
     return(x)
     
 def main():
+    #actual game code
     li = list(map(int, input("Welcome to the nim bot. To start, please enter the starting setup: ").split()))
     items_left = sum(li)
     while items_left > 0:
-        li = list(map(int, input("I made my move, the piles now look like this: " + str(nim_move(li)) + " your turn!").split()))         
+        li = list(map(int, input("I made my move, the piles now look like this: " + str(nim_move(li)) + " your turn! ").split()))         
         items_left = sum(li)
 
 main()
 
+#to do:
 
-#stop invalidinputs
+#stop invalid inputs
 #change message at end of game
-
-#add comments to functions
